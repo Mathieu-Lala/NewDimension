@@ -6,29 +6,38 @@ clean () {
     rm -rf $bin_name build "bin/${bin_name}"
 }
 
-build () {
-    mkdir build
-    cd build
-    cmake .. && cmake --build -j4 . && cd ..
+release () {
+    mkdir build && cd build
+    cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build -j4 . && cd ..
+}
+
+debug () {
+    mkdir build && cd build
+    cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build -j4 . && cd ..
 }
 
 re () {
     clean
-    build
+    debug
 }
 
 usage () {
     echo "USAGE:" $0 "[option]"
     echo "OPTION:"
-    echo "  usage|-u  print this message"
-    echo "  build     generate the binary"
-    echo "  clean     remove the build folder and the binaries"
-    echo "  re        clean then build"
+    echo "  usage|-u    print this message"
+    echo "  debug       generate a debug build"
+    echo "  release     generate a release build"
+    echo "  clean       remove the build folder and the binaries"
+    echo "  re          clean then create a debug build"
 }
 
 case $1 in
-    build)
-    build
+    debug)
+    debug
+    shift
+    ;;
+    release)
+    release
     shift
     ;;
     clean)

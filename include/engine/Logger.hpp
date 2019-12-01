@@ -12,8 +12,8 @@
 # include <iostream>
 # include <array>
 # include <ctime>
-//# include <cstring>
 # include <functional>
+# include "config/config.hpp"
 
 namespace nd {
 namespace engine {
@@ -143,7 +143,12 @@ private:
             << exp << std::endl;   \
     } while (false)
 
-# define DEBUG(exp)     LOG(nd::engine::Logger::DEBUG, exp)
+# if PROJECT_BUILD_TYPE == Debug
+#  define DEBUG(exp)     LOG(nd::engine::Logger::DEBUG, exp)
+# else
+#  define DEBUG(exp)
+# endif
+
 # define INFO(exp)      LOG(nd::engine::Logger::INFO, exp)
 # define NOTICE(exp)    LOG(nd::engine::Logger::NOTICE, exp)
 # define WARNING(exp)   LOG(nd::engine::Logger::WARNING, exp)

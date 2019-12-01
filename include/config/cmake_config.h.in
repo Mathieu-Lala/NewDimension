@@ -1,0 +1,19 @@
+/*
+** EPITECH PROJECT, 2019
+** NewDimension
+** File description:
+** config
+*/
+
+#ifndef CMAKE_CONFIG_HPP_
+# define CMAKE_CONFIG_HPP_
+
+# cmakedefine PROJECT_NAME "@PROJECT_NAME@"
+# cmakedefine PROJECT_VERSION "@PROJECT_VERSION@"
+# cmakedefine PROJECT_VERSION_MAJOR "@PROJECT_VERSION_MAJOR@"
+# cmakedefine PROJECT_VERSION_MINOR "@PROJECT_VERSION_MINOR@"
+# cmakedefine PROJECT_VERSION_PATCH "@PROJECT_VERSION_PATCH@"
+
+# cmakedefine PROJECT_BUILD_TYPE @PROJECT_BUILD_TYPE@
+
+#endif /* !CMAKE_CONFIG_HPP_ */

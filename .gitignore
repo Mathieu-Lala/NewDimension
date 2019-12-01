@@ -1,6 +1,17 @@
-*.out
-*~
-
+### Build folder
+# Our build folder
 build
 
+# Visual Studio build folder
+out
+
+### Target build
+app
+
+### Temp / useless files
 vgcore.*
+trash
+
+### IDE folder
+.vs
+.vscode
