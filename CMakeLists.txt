@@ -15,7 +15,7 @@ set(NEW_DIMENSION_VERSION_MINOR 0)
 ###############################################################################
 ### Target build
 
-set(NEW_DIMENSION_BIN a.out)
+set(NEW_DIMENSION_BIN app)
 
 set(NEW_DIMENSION_INCLUDE_DIR ./include)
 set(NEW_DIMENSION_LIB_OUTPUT_DIR ${CMAKE_BINARY_DIR}/../lib)
