@@ -50,11 +50,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${NEW_DIMENSION_BIN_OUTPUT_DIR})
 add_executable(${NEW_DIMENSION_BIN}
     src/main.cpp
     src/engine/Logger.cpp
+    src/engine/Window.cpp
 )
 
 set_target_properties(${NEW_DIMENSION_BIN} PROPERTIES
     CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS ON
 )
+
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
+target_link_libraries(${NEW_DIMENSION_BIN} ${SDL2_LIBRARIES})
 
 add_custom_target(${NEW_DIMENSION_BIN}_link ALL
     COMMAND ${CMAKE_COMMAND} -E create_symlink

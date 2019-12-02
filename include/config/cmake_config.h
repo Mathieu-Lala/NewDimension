@@ -14,6 +14,6 @@
 # define PROJECT_VERSION_MINOR "1"
 # define PROJECT_VERSION_PATCH "1"
 
-# define PROJECT_BUILD_TYPE Release
+# define PROJECT_BUILD_TYPE Debug
 
 #endif /* !CMAKE_CONFIG_HPP_ */
