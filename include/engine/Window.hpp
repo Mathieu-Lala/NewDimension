@@ -31,13 +31,15 @@ public:
 
     void draw(unsigned int x, unsigned int y, Pixel color);
 
-    inline void setOpen(bool v) noexcept
-        { m_is_open = v; }
-
     inline const math::Vector2u &getResolution() const noexcept
         { return m_screen_resolution; }
 
     void setResolution(const math::Vector2u &);
+
+    void handleEvent(const SDL_Event &);
+
+    unsigned int getSDL_ID() const noexcept
+        { return SDL_GetWindowID(m_window); }
 
 protected:
 private:

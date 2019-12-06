@@ -29,11 +29,6 @@ configure_file(${NEW_DIMENSION_INCLUDE_DIR}/config/cmake_config.h.in
     ../${NEW_DIMENSION_INCLUDE_DIR}/config/cmake_config.h)
 
 ###############################################################################
-### Target build
-
-set(NEW_DIMENSION_BIN app)
-
-###############################################################################
 ### Build specification
 
 include_directories(${NEW_DIMENSION_INCLUDE_DIR})
@@ -45,11 +40,16 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${NEW_DIMENSION_LIB_OUTPUT_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${NEW_DIMENSION_BIN_OUTPUT_DIR})
 
 ###############################################################################
-### Program
+### Target build
+
+set(NEW_DIMENSION_BIN app)
 
 add_executable(${NEW_DIMENSION_BIN}
     src/main.cpp
+
     src/engine/Logger.cpp
+
+    src/engine/Core.cpp
     src/engine/Window.cpp
 )
 

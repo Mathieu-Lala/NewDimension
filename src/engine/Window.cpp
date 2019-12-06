@@ -32,7 +32,7 @@ nd::engine::Window::Window(math::Vector2u window_size, math::Vector2u screen_res
     if (!m_window)
         throw std::runtime_error(SDL_GetError());
 
-    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!m_renderer)
         throw std::runtime_error(SDL_GetError());
 
@@ -43,17 +43,17 @@ nd::engine::Window::Window(math::Vector2u window_size, math::Vector2u screen_res
 
 nd::engine::Window::~Window()
 {
-    if (m_window)
-        SDL_DestroyWindow(m_window);
-
-    if (m_renderer)
-        SDL_DestroyRenderer(m_renderer);
-
     if (m_texture)
         SDL_DestroyTexture(m_texture);
 
     if (m_frame_buffer)
         delete[] m_frame_buffer;
+
+    if (m_renderer)
+        SDL_DestroyRenderer(m_renderer);
+
+    if (m_window)
+        SDL_DestroyWindow(m_window);
 
     NOTICE("Window:: Destruction of window [" << c_uid << "]");
 }
@@ -109,4 +109,8 @@ void nd::engine::Window::setResolution(const math::Vector2u &new_resolution)
         throw std::bad_alloc();
 
     NOTICE("Window:: Set resolution of window (" << m_screen_resolution.x << ", " << m_screen_resolution.y << ")");
+}
+
+void nd::engine::Window::handleEvent(const SDL_Event &)
+{
 }
