@@ -8,36 +8,7 @@
 #include <algorithm>
 #include "engine/Core.hpp"
 #include "engine/Window.hpp"
-
-
-// will change
-class Renderer {
-public:
-
-    static void render(nd::engine::Window *w, int dt)
-    {
-        static auto color_1 = std::rand() % 0xFFFFFFFF;
-        static auto color_2 = std::rand() % 0xFFFFFFFF;
-        static int counter = 0;
-
-        counter += dt;
-
-        auto resolution = w->getResolution();
-        w->clear((w->getSDL_ID() & 1) ? color_2 : color_1);
-        if (counter >= 1000) {
-            color_1 = std::rand() % 0xFFFFFFFF;
-            color_2 = std::rand() % 0xFFFFFFFF;
-            counter = 0;
-        }
-        for (auto j = 0u; j != resolution.y; j++)
-            for (auto i = 0u; i != resolution.x; i++)
-                if (i & j)
-                    w->draw(i, j, (w->getSDL_ID() & 1) ? color_1 : color_2);
-    }
-
-private:
-};
-
+#include "engine/Renderer.hpp"
 
 nd::engine::Core::Core() :
     frameDelta  (0)
@@ -53,7 +24,7 @@ void nd::engine::Core::run()
     int t_start = SDL_GetTicks();
 
     for (auto &i : m_windows) {
-        Renderer::render(i.get(), /* tmp */ frameDelta / m_windows.size());
+        Renderer::render(i.get());
         i->display();
     }
 
