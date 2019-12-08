@@ -28,6 +28,7 @@ void nd::engine::Core::run()
         i->display();
     }
 
+    // tmp
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE) {
@@ -42,7 +43,5 @@ void nd::engine::Core::run()
 
 bool nd::engine::Core::isRunning()
 {
-    return std::any_of(m_windows.begin(), m_windows.end(), [](const auto &i) {
-        return i && i->isOpen();
-    });
+    return !!m_windows.size();
 }

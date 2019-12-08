@@ -22,9 +22,7 @@ nd::engine::Window::Window(math::Vector2u window_size, math::Vector2u screen_res
     m_window            (nullptr),
     m_renderer          (nullptr),
     m_texture           (nullptr),
-    m_frame_buffer      (nullptr),
-
-    m_is_open           (true)
+    m_frame_buffer      (nullptr)
 {
     m_window = SDL_CreateWindow("",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -32,7 +30,8 @@ nd::engine::Window::Window(math::Vector2u window_size, math::Vector2u screen_res
     if (!m_window)
         throw std::runtime_error(SDL_GetError());
 
-    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    m_renderer = SDL_CreateRenderer(m_window, -1,
+        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!m_renderer)
         throw std::runtime_error(SDL_GetError());
 
@@ -108,9 +107,6 @@ void nd::engine::Window::setResolution(const math::Vector2u &new_resolution)
     if (!m_frame_buffer)
         throw std::bad_alloc();
 
-    NOTICE("Window:: Set resolution of window (" << m_screen_resolution.x << ", " << m_screen_resolution.y << ")");
-}
-
-void nd::engine::Window::handleEvent(const SDL_Event &)
-{
+    NOTICE("Window:: Set resolution of window (" <<
+        m_screen_resolution.x << ", " << m_screen_resolution.y << ")");
 }

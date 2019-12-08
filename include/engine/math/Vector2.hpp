@@ -20,9 +20,7 @@ struct Vector2 {
 
 };
 
-//using Vector2i = Vector2<int>;
 using Vector2u = Vector2<unsigned int>;
-//using Vector2ul = Vector2<std::size_t>;
 
 } // namespace math
 } // namespace engine

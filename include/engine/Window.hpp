@@ -21,9 +21,6 @@ public:
 
     using ID = int;
 
-    inline bool isOpen() const noexcept
-        { return m_is_open; }
-
     using Pixel = unsigned int;
 
     void display();
@@ -34,10 +31,12 @@ public:
     inline const math::Vector2u &getResolution() const noexcept
         { return m_screen_resolution; }
 
+    inline float getAspectRatio() const noexcept
+        { return m_screen_resolution.x / static_cast<float>(m_screen_resolution.y); } // assuming X > Y
+
     void setResolution(const math::Vector2u &);
 
-    void handleEvent(const SDL_Event &);
-
+    // tmp
     unsigned int getSDL_ID() const noexcept
         { return SDL_GetWindowID(m_window); }
 

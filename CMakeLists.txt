@@ -52,6 +52,7 @@ add_executable(${NEW_DIMENSION_BIN}
     src/engine/Core.cpp
     src/engine/Window.cpp
     src/engine/Renderer.cpp
+    src/engine/Camera.cpp
 )
 
 set_target_properties(${NEW_DIMENSION_BIN} PROPERTIES
