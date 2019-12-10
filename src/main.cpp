@@ -8,6 +8,7 @@
 #include "engine/Logger.hpp"
 #include "config/config.hpp"
 #include "engine/Window.hpp"
+#include "engine/Scene.hpp"
 #include "engine/Core.hpp"
 
 int main(int, char **av) try
@@ -27,11 +28,20 @@ int main(int, char **av) try
 
     std::srand(std::time(nullptr));
 
-    using V2u = nd::engine::math::Vector2u; // tmp
+    // just temp alias of type
+    using V2u = nd::engine::math::Vector2u;
+    using V3f = nd::engine::math::Vector3f;
 
     nd::engine::Core core;
+
+    // normal window
     core.addWindow(std::make_unique<nd::engine::Window>(V2u { 300, 300 }, V2u { 300, 300 }));
+
+    // bigger window, smaller resolution
     core.addWindow(std::make_unique<nd::engine::Window>(V2u { 700, 700 }, V2u { 200, 200 }));
+
+    auto scene = core.setScene(std::make_unique<nd::engine::Scene>());
+    scene->setCamera(std::make_unique<nd::engine::Camera>(V3f { 0.0f }, V3f { 0.0f, 0.0f, 1.0f }));
 
     while (core.isRunning()) {
 

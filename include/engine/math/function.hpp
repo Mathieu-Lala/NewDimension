@@ -43,6 +43,11 @@ constexpr bool solveQuadratic(
     return true;
 }
 
+constexpr inline double degree2rad(double degree)
+{
+    return degree * M_PI / 180.0f;
+}
+
 } // namespace math
 } // namespace engine
 } // namespace nd

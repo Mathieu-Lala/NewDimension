@@ -6,6 +6,7 @@
 */
 
 #include "engine/Camera.hpp"
+#include "engine/math/function.hpp"
 
 nd::engine::Camera::Camera(math::Vector3f position, math::Vector3f orientation, float fov) :
     m_position      (std::move(position)),
@@ -13,10 +14,12 @@ nd::engine::Camera::Camera(math::Vector3f position, math::Vector3f orientation, 
     m_fov           (fov)
 { }
 
-void nd::engine::Camera::generateRay(float x, float y, math::Ray &ray)
+nd::engine::math::Ray nd::engine::Camera::generateRay(float x, float y) const noexcept
 {
-    // todo : implement fov
-
-    ray.m_origin = this->m_position;
-    ray.m_dest = m_orientation * math::Vector3f(x, y, 1.0f) * m_orientation.conjugate();
+    return math::Ray {
+        this->m_position,
+        m_orientation *
+            math::Vector3f(x * math::degree2rad(m_fov), y * math::degree2rad(m_fov), 1.0f) *
+            m_orientation.conjugate()
+    };
 }

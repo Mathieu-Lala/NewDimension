@@ -19,7 +19,13 @@ public:
     Camera(math::Vector3f position, math::Vector3f orientation, float fov = 90.0f);
     ~Camera() = default;
 
-    void generateRay(float x, float y, math::Ray &ray);
+    math::Ray generateRay(float x, float y) const noexcept;
+
+    inline float getFOV() const noexcept
+        { return m_fov; }
+
+    inline void setFOV(float fov) noexcept
+        { m_fov = fov; }
 
 protected:
 private:

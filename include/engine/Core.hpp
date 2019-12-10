@@ -15,6 +15,7 @@ namespace nd {
 namespace engine {
 
 class Window;
+class Scene;
 
 class Core {
 public:
@@ -22,7 +23,8 @@ public:
     Core();
     ~Core() = default;
 
-    Window *addWindow(std::unique_ptr<Window> &&w);
+    Window *addWindow(std::unique_ptr<Window> &&);
+    Scene *setScene(std::unique_ptr<Scene> &&);
 
     void run();
     bool isRunning();
@@ -31,6 +33,8 @@ protected:
 private:
 
     std::list<std::unique_ptr<Window>> m_windows;
+
+    std::unique_ptr<Scene> m_scene;
 
     int frameDelta;
 

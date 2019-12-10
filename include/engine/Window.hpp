@@ -19,7 +19,12 @@ public:
     Window(math::Vector2u window_size, math::Vector2u screen_resolution);
     ~Window();
 
-    using ID = int;
+
+    using ID = decltype(SDL_GetWindowID(nullptr));
+
+    inline ID getID() const
+        { return SDL_GetWindowID(m_window); }
+
 
     using Pixel = unsigned int;
 
@@ -27,6 +32,7 @@ public:
     void clear(Pixel color);
 
     void draw(unsigned int x, unsigned int y, Pixel color);
+
 
     inline const math::Vector2u &getResolution() const noexcept
         { return m_screen_resolution; }
@@ -36,15 +42,9 @@ public:
 
     void setResolution(const math::Vector2u &);
 
-    // tmp
-    unsigned int getSDL_ID() const noexcept
-        { return SDL_GetWindowID(m_window); }
 
 protected:
 private:
-
-    static ID s_current_id;
-    const ID c_uid;
 
     math::Vector2u m_window_size;
     math::Vector2u m_screen_resolution;

@@ -12,12 +12,13 @@ namespace nd {
 namespace engine {
 
 class Window;
+class Scene;
 
 class Renderer {
 public:
     Renderer() = delete;
 
-    static void render(Window *window);
+    static void render(Window *window, Scene *scene);
 
 protected:
 private:
