@@ -22,7 +22,7 @@ class Core {
 public:
 
     Core();
-    ~Core() = default;
+    ~Core();
 
     Window *addWindow(std::unique_ptr<Window> &&);
     Scene *setScene(std::unique_ptr<Scene> &&);

@@ -114,8 +114,11 @@ void nd::engine::Window::setResolution(const math::Vector2u &new_resolution)
     if (!m_frame_buffer)
         throw std::bad_alloc();
 
+//#define DEBUG_RESOLUTION
+#ifdef DEBUG_RESOLUTION
     NOTICE("Window:: Set resolution of window [" << getID() << "](" <<
         m_screen_resolution.x << ", " << m_screen_resolution.y << ")");
+#endif
 }
 
 void nd::engine::Window::onEvent(const SDL_Event &e)

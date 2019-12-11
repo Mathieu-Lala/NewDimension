@@ -18,7 +18,7 @@ class Renderer {
 public:
     Renderer() = delete;
 
-    static void render(Window *window, Scene *scene);
+    static void render(Window *window, const Scene *scene);
 
 protected:
 private:

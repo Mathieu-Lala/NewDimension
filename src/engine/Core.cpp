@@ -13,7 +13,15 @@
 
 nd::engine::Core::Core() :
     frameDelta  (0)
-{ }
+{
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+        throw std::runtime_error(SDL_GetError());
+}
+
+nd::engine::Core::~Core()
+{
+    SDL_Quit();
+}
 
 nd::engine::Window *nd::engine::Core::addWindow(std::unique_ptr<Window> &&w)
 {

@@ -9,6 +9,7 @@
 # define SCENE_HPP_
 
 # include <memory>
+# include <list>
 # include "engine/Camera.hpp"
 
 namespace nd {
@@ -19,11 +20,9 @@ public:
     Scene() = default;
     ~Scene() = default;
 
-    inline void setCamera(std::unique_ptr<Camera> &&cam) noexcept
-        { m_camera = std::move(cam); }
+    nd::engine::Camera *addCamera(std::unique_ptr<Camera> &&cam) noexcept;
 
-    const std::unique_ptr<Camera> &getCamera() const noexcept
-        { return m_camera; }
+    const std::list<std::unique_ptr<Camera>> &getCameras() const noexcept;
 
     void onEvent(const SDL_Event &e);
     void onUpdate(decltype(SDL_GetTicks()) dt);
@@ -31,8 +30,7 @@ public:
 protected:
 private:
 
-    // todo : add multiple camera
-    std::unique_ptr<Camera> m_camera;
+    std::list<std::unique_ptr<Camera>> m_cameras;
 
 };
 

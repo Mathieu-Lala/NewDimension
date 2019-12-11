@@ -11,13 +11,16 @@
 # include <SDL2/SDL.h>
 # include "engine/math/Vector3.hpp"
 # include "engine/math/Ray.hpp"
+# include "engine/math/Rect.hpp"
 
 namespace nd {
 namespace engine {
 
 class Camera {
 public:
-    Camera(math::Vector3f position, math::Vector3f orientation, float fov = 90.0f);
+    using ViewPort = math::Rect<unsigned int>;
+
+    Camera(math::Vector3f position, math::Vector3f orientation, ViewPort viewport, float fov = 90.0f);
     ~Camera() = default;
 
     math::Ray generateRay(float x, float y) const noexcept;
@@ -25,12 +28,14 @@ public:
     void onEvent(const SDL_Event &e);
     void onUpdate(decltype(SDL_GetTicks()) dt);
 
+    inline const ViewPort &getViewPort() const noexcept
+        { return m_viewport; }
+
 protected:
 private:
 
     float m_fov;
-
-    // todo : add view port on window
+    ViewPort m_viewport;
 
     // the data under should be in a 'transform' class
 

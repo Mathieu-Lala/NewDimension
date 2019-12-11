@@ -10,16 +10,22 @@
 
 #include "engine/Logger.hpp"
 
-nd::engine::Camera::Camera(math::Vector3f position, math::Vector3f orientation, float fov) :
-    m_fov   (fov),
+nd::engine::Camera::Camera(
+    math::Vector3f position,
+    math::Vector3f orientation,
+    ViewPort viewport,
+    float fov) :
+
+    m_fov       (fov),
+    m_viewport  (std::move(viewport)),
 
     m_position              (std::move(position)),
     m_deplacement_momentum  (0.0f),
-    m_deplacement_speed     (0.5f, 0.5f, 0.5f),
+    m_deplacement_speed     (0.1f, 0.1f, 0.1f),
 
     m_orientation           (std::move(orientation)),
     m_rotation_momentum     (0.0f),
-    m_rotation_sensibility  (0.1f, 0.1f, 0.1f)
+    m_rotation_sensibility  (0.05f, 0.05f, 0.05f)
 { }
 
 nd::engine::math::Ray nd::engine::Camera::generateRay(float x, float y) const noexcept
