@@ -10,6 +10,7 @@
 
 # include <list>
 # include <memory>
+# include <SDL2/SDL.h>
 
 namespace nd {
 namespace engine {
@@ -29,6 +30,8 @@ public:
     void run();
     bool isRunning();
 
+    using Millisec = decltype(SDL_GetTicks());
+
 protected:
 private:
 
@@ -36,7 +39,8 @@ private:
 
     std::unique_ptr<Scene> m_scene;
 
-    int frameDelta;
+    // todo : move that somewhere else
+    Millisec frameDelta;
 
 };
 

@@ -21,7 +21,6 @@ public:
 
 
     using ID = decltype(SDL_GetWindowID(nullptr));
-
     inline ID getID() const
         { return SDL_GetWindowID(m_window); }
 
@@ -42,6 +41,8 @@ public:
 
     void setResolution(const math::Vector2u &);
 
+
+    void onEvent(const SDL_Event &e);
 
 protected:
 private:

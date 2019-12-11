@@ -117,3 +117,15 @@ void nd::engine::Window::setResolution(const math::Vector2u &new_resolution)
     NOTICE("Window:: Set resolution of window [" << getID() << "](" <<
         m_screen_resolution.x << ", " << m_screen_resolution.y << ")");
 }
+
+void nd::engine::Window::onEvent(const SDL_Event &e)
+{
+    if (e.type == SDL_KEYDOWN && e.window.windowID == getID()) {
+
+        if (e.key.keysym.scancode == SDL_SCANCODE_KP_PLUS)
+            setResolution(getResolution() + math::Vector2u { 10, 10 });
+        else if (e.key.keysym.scancode == SDL_SCANCODE_KP_MINUS)
+            setResolution(getResolution() - math::Vector2u { 10, 10 });
+
+    }
+}

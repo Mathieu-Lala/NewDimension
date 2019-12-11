@@ -8,6 +8,8 @@
 #ifndef VECTOR3_HPP_
 # define VECTOR3_HPP_
 
+# include "engine/math/function.hpp"
+
 namespace nd {
 namespace engine {
 namespace math {
@@ -20,14 +22,7 @@ struct Vector3 {
     T z;
     T w; // we use vector3 as quaternion
 
-    constexpr Vector3() :
-        x   (T(0)),
-        y   (T(0)),
-        z   (T(0)),
-        w   (T(1))
-    { }
-
-    constexpr Vector3(T value) :
+    constexpr Vector3(T value = T(0)) :
         x   (value),
         y   (value),
         z   (value),
@@ -43,9 +38,19 @@ struct Vector3 {
 
     ~Vector3() = default;
 
+    constexpr inline bool operator==(const Vector3 &other) const noexcept
+    {
+        return this->x == other.x && this->y == other.y && this->z == other.z;
+    }
+
+    constexpr inline bool operator!=(const Vector3 &other) const noexcept
+    {
+        return !(*this == other);
+    }
+
     constexpr inline Vector3 operator+(const Vector3 &other) const noexcept
     {
-        return Vector3 {
+        return {
             this->x + other.x,
             this->y + other.y,
             this->z + other.z
@@ -54,10 +59,38 @@ struct Vector3 {
 
     constexpr inline Vector3 operator-(const Vector3 &other) const noexcept
     {
-        return Vector3 {
+        return {
             this->x - other.x,
             this->y - other.y,
             this->z - other.z
+        };
+    }
+
+    constexpr inline Vector3 &operator+=(const Vector3 &other) noexcept
+    {
+        *this = *this + other;
+        return *this;
+    }
+
+    constexpr inline Vector3 &operator-=(const Vector3 &other) noexcept
+    {
+        *this = *this - other;
+        return *this;
+    }
+
+    constexpr inline T length() const noexcept
+    {
+        return std::sqrt(x * x + y * y + z * z + w * w);
+    }
+
+    constexpr inline Vector3 normalize() const
+    {
+        const auto l = 1.0f / length();
+        return {
+            x * l,
+            y * l,
+            z * l,
+            w * l
         };
     }
 
@@ -68,23 +101,70 @@ struct Vector3 {
 
     constexpr inline Vector3 conjugate() const noexcept
     {
-        return Vector3 {
-            -this->x,
-            -this->y,
-            -this->z,
+        return {
+            - this->x,
+            - this->y,
+            - this->z,
             this->w
+        };
+    }
+
+    constexpr inline Vector3 mult_coord(const Vector3 &other) const noexcept
+    {
+        return {
+            this->x * other.x,
+            this->y * other.y,
+            this->z * other.z,
+            this->w * other.w
         };
     }
 
     constexpr inline Vector3 operator*(const Vector3 &other) const noexcept
     {
-        return Vector3 {
+        return {
             this->w * other.x + this->x * other.w + this->y * other.z - this->z * other.y,
             this->w * other.y - this->x * other.z + this->y * other.w + this->z * other.x,
             this->w * other.z + this->x * other.y - this->y * other.x + this->z * other.w,
             this->w * other.w - this->x * other.x - this->y * other.y - this->z * other.z
         };
     }
+
+    constexpr inline Vector3 operator*(T m) const noexcept
+    {
+        return {
+            this->x * m,
+            this->y * m,
+            this->z * m
+        };
+    }
+
+    constexpr inline Vector3 getRightVector() const noexcept
+    {
+        return *this * Vector3(T(1), T(0), T(0)) * this->conjugate();
+    }
+
+    constexpr inline Vector3 getUpVector() const noexcept
+    {
+        return *this * Vector3(T(0), T(1), T(0)) * this->conjugate();
+    }
+
+    constexpr inline Vector3 getForwardVector() const noexcept
+    {
+        return *this * Vector3(T(0), T(0), T(1)) * this->conjugate();
+    }
+
+    constexpr inline Vector3 euler(float theta) const
+    {
+        theta = 0.5f * degree2rad(theta);
+
+        return {
+            this->x * std::sin(theta),
+            this->y * std::sin(theta),
+            this->z * std::sin(theta),
+            std::cos(theta),
+        };
+    }
+
 };
 
 using Vector3f = Vector3<float>;

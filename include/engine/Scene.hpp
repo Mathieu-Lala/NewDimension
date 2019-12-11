@@ -25,9 +25,13 @@ public:
     const std::unique_ptr<Camera> &getCamera() const noexcept
         { return m_camera; }
 
+    void onEvent(const SDL_Event &e);
+    void onUpdate(decltype(SDL_GetTicks()) dt);
+
 protected:
 private:
 
+    // todo : add multiple camera
     std::unique_ptr<Camera> m_camera;
 
 };

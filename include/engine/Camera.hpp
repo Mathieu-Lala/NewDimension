@@ -8,6 +8,7 @@
 #ifndef CAMERA_HPP_
 # define CAMERA_HPP_
 
+# include <SDL2/SDL.h>
 # include "engine/math/Vector3.hpp"
 # include "engine/math/Ray.hpp"
 
@@ -21,18 +22,25 @@ public:
 
     math::Ray generateRay(float x, float y) const noexcept;
 
-    inline float getFOV() const noexcept
-        { return m_fov; }
-
-    inline void setFOV(float fov) noexcept
-        { m_fov = fov; }
+    void onEvent(const SDL_Event &e);
+    void onUpdate(decltype(SDL_GetTicks()) dt);
 
 protected:
 private:
 
-    math::Vector3f m_position;
-    math::Vector3f m_orientation;
     float m_fov;
+
+    // todo : add view port on window
+
+    // the data under should be in a 'transform' class
+
+    math::Vector3f m_position;
+    math::Vector3f m_deplacement_momentum;
+    math::Vector3f m_deplacement_speed;
+
+    math::Vector3f m_orientation;
+    math::Vector3f m_rotation_momentum;
+    math::Vector3f m_rotation_sensibility;
 
 };
 

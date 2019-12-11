@@ -28,7 +28,7 @@ nd::engine::Scene *nd::engine::Core::setScene(std::unique_ptr<Scene> &&scene)
 
 void nd::engine::Core::run()
 {
-    int t_start = SDL_GetTicks();
+    Millisec t_start = SDL_GetTicks();
 
     for (auto &i : m_windows) {
         i->clear(0x00);
@@ -40,11 +40,20 @@ void nd::engine::Core::run()
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE) {
-            m_windows.remove_if([&e](const auto &i) {
-                return i->getID() == e.window.windowID;
-            });
+            m_windows.remove_if([&e](const auto &i) { return i->getID() == e.window.windowID; });
+
+        } else {
+
+            for (auto &i : m_windows)
+                i->onEvent(e);
+
+            if (m_scene)
+                m_scene->onEvent(e);
         }
     }
+
+    if (m_scene)
+        m_scene->onUpdate(frameDelta);
 
     frameDelta = SDL_GetTicks() - t_start;
 }

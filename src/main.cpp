@@ -34,11 +34,7 @@ int main(int, char **av) try
 
     nd::engine::Core core;
 
-    // normal window
-    core.addWindow(std::make_unique<nd::engine::Window>(V2u { 300, 300 }, V2u { 300, 300 }));
-
-    // bigger window, smaller resolution
-    core.addWindow(std::make_unique<nd::engine::Window>(V2u { 700, 700 }, V2u { 200, 200 }));
+    core.addWindow(std::make_unique<nd::engine::Window>(V2u { 500, 500 }, V2u { 300, 300 }));
 
     auto scene = core.setScene(std::make_unique<nd::engine::Scene>());
     scene->setCamera(std::make_unique<nd::engine::Camera>(V3f { 0.0f }, V3f { 0.0f, 0.0f, 1.0f }));
