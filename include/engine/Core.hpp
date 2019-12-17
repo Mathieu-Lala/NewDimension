@@ -10,13 +10,13 @@
 
 # include <list>
 # include <memory>
-# include <SDL2/SDL.h>
 
 namespace nd {
 namespace engine {
 
 class Window;
 class Scene;
+class TimeManager;
 
 class Core {
 public:
@@ -28,19 +28,17 @@ public:
     Scene *setScene(std::unique_ptr<Scene> &&);
 
     void run();
-    bool isRunning();
-
-    using Millisec = decltype(SDL_GetTicks());
 
 protected:
 private:
 
-    std::list<std::unique_ptr<Window>> m_windows;
+    void renderWindow(const std::unique_ptr<Window> &);
+    void handleWindowEvent(const std::unique_ptr<Window> &, const SDL_WindowEvent &);
 
+    std::list<std::unique_ptr<Window>> m_windows;
     std::unique_ptr<Scene> m_scene;
 
-    // todo : move that somewhere else
-    Millisec frameDelta;
+    TimeManager m_time_manager;
 
 };
 

@@ -9,8 +9,9 @@
 # define SCENE_HPP_
 
 # include <memory>
-# include <list>
+# include <vector>
 # include "engine/Camera.hpp"
+# include "engine/TimeManager.hpp"
 
 namespace nd {
 namespace engine {
@@ -20,17 +21,20 @@ public:
     Scene() = default;
     ~Scene() = default;
 
+    using Cameras = std::vector<std::unique_ptr<Camera>>;
+
     nd::engine::Camera *addCamera(std::unique_ptr<Camera> &&cam) noexcept;
 
-    const std::list<std::unique_ptr<Camera>> &getCameras() const noexcept;
+    const Cameras &getCameras() const noexcept;
 
-    void onEvent(const SDL_Event &e);
-    void onUpdate(decltype(SDL_GetTicks()) dt);
+    virtual void onEvent(const SDL_Event &e);
+    virtual void onUpdate(TimeManager::Millisec);
 
 protected:
-private:
 
-    std::list<std::unique_ptr<Camera>> m_cameras;
+    Cameras m_cameras;
+
+private:
 
 };
 

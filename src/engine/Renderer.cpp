@@ -16,17 +16,22 @@ void nd::engine::Renderer::render(Window *window, const Scene *scene)
     // todo : save the shape in a Scene class
     shape::Sphere s({ 0.0f, 0.0f, 100.0f}, 40.0f);
 
+    const auto &res = window->getResolution();
+
     for (auto &i : scene->getCameras()) {
 
-        auto &viewport = i->getViewPort();
+        auto viewport = i->getViewPort() * math::Rect {
+            static_cast<float>(res.x),
+            static_cast<float>(res.y),
+            static_cast<float>(res.x),
+            static_cast<float>(res.y)
+        };
 
-        for (unsigned int y = viewport.top; y != viewport.top + viewport.height; y++)
-            for (unsigned int x = viewport.left; x != viewport.left + viewport.width; x++) {
+        for (auto y = viewport.top; y < viewport.top + viewport.height; y++)
+            for (auto x = viewport.left; x < viewport.left + viewport.width; x++) {
 
-                auto x_norm = ((x - viewport.left) /
-                    static_cast<float>(viewport.width)) * 2.0f - 1.0f * window->getAspectRatio();
-                auto y_norm = ((y - viewport.top) /
-                    static_cast<float>(viewport.height)) * 2.0f - 1.0f;
+                const auto x_norm = ((x - viewport.left) / viewport.width) * 2.0f - 1.0f * window->getAspectRatio();
+                const auto y_norm = ((y - viewport.top) / viewport.height) * 2.0f - 1.0f;
 
                 auto ray = i->generateRay(x_norm, y_norm);
 

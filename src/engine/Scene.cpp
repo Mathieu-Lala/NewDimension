@@ -5,14 +5,16 @@
 ** Scene
 */
 
+#include <SDL2/SDL.h>
 #include "engine/Scene.hpp"
 
 nd::engine::Camera *nd::engine::Scene::addCamera(std::unique_ptr<Camera> &&cam) noexcept
 {
-    return m_cameras.emplace_front(std::move(cam)).get();
+    m_cameras.emplace_back(std::move(cam));
+    return m_cameras.back().get();
 }
 
-const std::list<std::unique_ptr<nd::engine::Camera>> &nd::engine::Scene::getCameras() const noexcept
+const nd::engine::Scene::Cameras &nd::engine::Scene::getCameras() const noexcept
 {
     return m_cameras;
 }
@@ -23,7 +25,7 @@ void nd::engine::Scene::onEvent(const SDL_Event &e)
         i->onEvent(e);
 }
 
-void nd::engine::Scene::onUpdate(decltype(SDL_GetTicks()) dt)
+void nd::engine::Scene::onUpdate(TimeManager::Millisec dt)
 {
     for (auto &i : this->m_cameras)
         i->onUpdate(dt);

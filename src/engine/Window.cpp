@@ -65,9 +65,6 @@ void nd::engine::Window::display()
     if (SDL_UpdateTexture(m_texture, nullptr, m_frame_buffer, m_screen_resolution.x * sizeof(Pixel)) == -1)
         throw std::runtime_error(SDL_GetError());
 
-    if (SDL_RenderClear(m_renderer) == -1)
-        throw std::runtime_error(SDL_GetError());
-
     if (SDL_RenderCopy(m_renderer, m_texture, nullptr, nullptr) == -1)
         throw std::runtime_error(SDL_GetError());
 
@@ -125,9 +122,9 @@ void nd::engine::Window::onEvent(const SDL_Event &e)
 {
     if (e.type == SDL_KEYDOWN && e.window.windowID == getID()) {
 
-        if (e.key.keysym.scancode == SDL_SCANCODE_KP_PLUS)
+        if (e.key.keysym.scancode == SDL_SCANCODE_F2)
             setResolution(getResolution() + math::Vector2u { 10, 10 });
-        else if (e.key.keysym.scancode == SDL_SCANCODE_KP_MINUS)
+        else if (e.key.keysym.scancode == SDL_SCANCODE_F3)
             setResolution(getResolution() - math::Vector2u { 10, 10 });
 
     }

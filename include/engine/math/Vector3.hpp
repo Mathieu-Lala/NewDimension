@@ -22,14 +22,14 @@ struct Vector3 {
     T z;
     T w; // we use vector3 as quaternion
 
-    constexpr Vector3(T value = T(0)) :
+    constexpr inline Vector3(T value = T(0)) :
         x   (value),
         y   (value),
         z   (value),
         w   (T(1))
     { }
 
-    constexpr Vector3(T xx, T yy, T zz, T ww = T(1)) :
+    constexpr inline Vector3(T xx, T yy, T zz, T ww = T(1)) :
         x   (xx),
         y   (yy),
         z   (zz),

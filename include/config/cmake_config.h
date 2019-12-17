@@ -9,10 +9,10 @@
 # define CMAKE_CONFIG_HPP_
 
 # define PROJECT_NAME "NewDimension"
-# define PROJECT_VERSION "1.1.1"
-# define PROJECT_VERSION_MAJOR "1"
-# define PROJECT_VERSION_MINOR "1"
-# define PROJECT_VERSION_PATCH "1"
+# define PROJECT_VERSION "0.0.0"
+# define PROJECT_VERSION_MAJOR "0"
+# define PROJECT_VERSION_MINOR "0"
+# define PROJECT_VERSION_PATCH "0"
 
 # define PROJECT_BUILD_TYPE Debug
 

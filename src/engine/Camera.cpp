@@ -5,10 +5,10 @@
 ** Camera
 */
 
+#include <SDL2/SDL.h>
+#include "engine/Logger.hpp"
 #include "engine/Camera.hpp"
 #include "engine/math/function.hpp"
-
-#include "engine/Logger.hpp"
 
 nd::engine::Camera::Camera(
     math::Vector3f position,
@@ -46,7 +46,7 @@ void nd::engine::Camera::onEvent(const SDL_Event &e)
 
         // RESET CAMERA
 
-        if (e.key.keysym.scancode == SDL_SCANCODE_KP_ENTER) {
+        if (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
             this->m_position = { 0.0f };
             this->m_deplacement_momentum = { 0.0f };
 
@@ -144,10 +144,11 @@ void nd::engine::Camera::onEvent(const SDL_Event &e)
 
 }
 
-void nd::engine::Camera::onUpdate(decltype(SDL_GetTicks()) dt)
+void nd::engine::Camera::onUpdate(TimeManager::Millisec dt)
 {
     if (m_deplacement_momentum != math::Vector3f { 0.0f }) {
         this->m_position += m_deplacement_momentum.mult_coord(m_deplacement_speed) * dt;
+
 //#define DEBUG_POSITION
 #ifdef DEBUG_POSITION
         DEBUG("Camera:: New position: (" <<
@@ -159,10 +160,12 @@ void nd::engine::Camera::onUpdate(decltype(SDL_GetTicks()) dt)
             this->m_deplacement_momentum.y << ", " <<
             this->m_deplacement_momentum.z << ")");
 #endif
+
     }
 
     if (m_rotation_momentum != math::Vector3f { 0.0f }) {
         m_orientation = (m_rotation_momentum.euler(dt).mult_coord(m_rotation_sensibility) * m_orientation).normalize();
+
 //#define DEBUG_ORIENTATION
 #ifdef DEBUG_ORIENTATION
         DEBUG("Camera:: New orientation: (" <<
@@ -174,5 +177,6 @@ void nd::engine::Camera::onUpdate(decltype(SDL_GetTicks()) dt)
             this->m_rotation_momentum.y << ", " <<
             this->m_rotation_momentum.z << ")");
 #endif
+
     }
 }

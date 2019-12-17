@@ -8,17 +8,19 @@
 #ifndef CAMERA_HPP_
 # define CAMERA_HPP_
 
-# include <SDL2/SDL.h>
 # include "engine/math/Vector3.hpp"
 # include "engine/math/Ray.hpp"
 # include "engine/math/Rect.hpp"
+# include "engine/TimeManager.hpp"
 
 namespace nd {
 namespace engine {
 
 class Camera {
 public:
-    using ViewPort = math::Rect<unsigned int>;
+
+    // normalized position on the screen of the view (between 0 and 1)
+    using ViewPort = math::Rect<float>;
 
     Camera(math::Vector3f position, math::Vector3f orientation, ViewPort viewport, float fov = 90.0f);
     ~Camera() = default;
@@ -26,7 +28,7 @@ public:
     math::Ray generateRay(float x, float y) const noexcept;
 
     void onEvent(const SDL_Event &e);
-    void onUpdate(decltype(SDL_GetTicks()) dt);
+    void onUpdate(TimeManager::Millisec);
 
     inline const ViewPort &getViewPort() const noexcept
         { return m_viewport; }
