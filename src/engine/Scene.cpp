@@ -7,6 +7,7 @@
 
 #include <SDL2/SDL.h>
 #include "engine/Scene.hpp"
+#include "engine/shapes/Sphere.hpp"
 
 nd::engine::Camera *nd::engine::Scene::addCamera(std::unique_ptr<Camera> &&cam) noexcept
 {

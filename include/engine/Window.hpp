@@ -10,6 +10,7 @@
 
 # include <SDL2/SDL.h>
 # include "engine/math/Vector2.hpp"
+# include "engine/Color.hpp"
 
 namespace nd {
 namespace engine {
@@ -25,12 +26,10 @@ public:
         { return SDL_GetWindowID(m_window); }
 
 
-    using Pixel = unsigned int;
-
     void display();
-    void clear(Pixel color);
+    void clear(Color::Hexa_value color);
 
-    void draw(unsigned int x, unsigned int y, Pixel color);
+    void draw(unsigned int x, unsigned int y, Color::Hexa_value color);
 
 
     inline const math::Vector2u &getResolution() const noexcept
@@ -44,6 +43,10 @@ public:
 
     void onEvent(const SDL_Event &e);
 
+
+    inline std::size_t getRayTracingDepth() const noexcept
+        { return m_ray_tracing_depth; }
+
 protected:
 private:
 
@@ -54,9 +57,11 @@ private:
     SDL_Renderer *m_renderer;
     SDL_Texture *m_texture;
 
-    Pixel *m_frame_buffer;
+    Color::Hexa_value *m_frame_buffer;
 
     bool m_is_open;
+
+    std::size_t m_ray_tracing_depth;
 
 };
 

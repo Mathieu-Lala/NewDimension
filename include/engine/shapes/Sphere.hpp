@@ -13,6 +13,7 @@
 # include "engine/math/Vector3.hpp"
 # include "engine/math/Ray.hpp"
 # include "engine/math/function.hpp"
+# include "engine/Material.hpp"
 
 namespace nd {
 namespace engine {
@@ -21,14 +22,15 @@ namespace shape {
 class Sphere {
 public:
     Sphere() = default;
-    Sphere(const math::Vector3f &pos, float radius) :
+    Sphere(const math::Vector3f &pos, float radius, const Material &material) :
         m_pos       (std::move(pos)),
-        m_radius    (radius)
+        m_radius    (radius),
+        m_material  (material)
     { }
 
     ~Sphere() = default;
 
-    constexpr bool intersect(const math::Ray &ray, float &t)
+    constexpr bool intersect(const math::Ray &ray, float &t) const
     {
         const auto oc = ray.m_origin - this->m_pos;
 
@@ -52,11 +54,19 @@ public:
         return true;
     }
 
+    const math::Vector3f &getCenter() const noexcept
+        { return m_pos; }
+
+    const Material &getMaterial() const noexcept
+        { return m_material; }
+
 protected:
 private:
 
     math::Vector3f m_pos;
     float m_radius;
+
+    Material m_material;
 
 };
 

@@ -20,12 +20,12 @@ public:
 
     using Millisec = std::chrono::milliseconds::rep;
 
-    inline void init()
+    inline void init() noexcept
     {
         m_last_call = std::chrono::system_clock::now();
     }
 
-    inline Millisec getElapsedTime()
+    inline Millisec getElapsedTime() noexcept
     {
         const auto last = m_last_call;
         const auto now = std::chrono::system_clock::now();

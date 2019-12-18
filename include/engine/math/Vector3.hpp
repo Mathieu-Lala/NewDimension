@@ -83,14 +83,15 @@ struct Vector3 {
         return std::sqrt(x * x + y * y + z * z + w * w);
     }
 
-    constexpr inline Vector3 normalize() const
+    constexpr inline Vector3 normalize() const noexcept
     {
-        const auto l = 1.0f / length();
+        const auto len = length();
+        const auto d = 1.0f / (len != T(0) ? len : T(1));
         return {
-            x * l,
-            y * l,
-            z * l,
-            w * l
+            x * d,
+            y * d,
+            z * d,
+            w * d
         };
     }
 

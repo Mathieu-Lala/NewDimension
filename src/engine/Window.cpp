@@ -18,7 +18,9 @@ nd::engine::Window::Window(math::Vector2u window_size, math::Vector2u screen_res
     m_window            (nullptr),
     m_renderer          (nullptr),
     m_texture           (nullptr),
-    m_frame_buffer      (nullptr)
+    m_frame_buffer      (nullptr),
+
+    m_ray_tracing_depth (1ul)
 {
     m_window = SDL_CreateWindow(
         "", // should be configurable
@@ -62,7 +64,7 @@ nd::engine::Window::~Window()
 
 void nd::engine::Window::display()
 {
-    if (SDL_UpdateTexture(m_texture, nullptr, m_frame_buffer, m_screen_resolution.x * sizeof(Pixel)) == -1)
+    if (SDL_UpdateTexture(m_texture, nullptr, m_frame_buffer, m_screen_resolution.x * sizeof(Color::Hexa_value)) == -1)
         throw std::runtime_error(SDL_GetError());
 
     if (SDL_RenderCopy(m_renderer, m_texture, nullptr, nullptr) == -1)
@@ -71,12 +73,12 @@ void nd::engine::Window::display()
     SDL_RenderPresent(m_renderer);
 }
 
-void nd::engine::Window::clear(Pixel color)
+void nd::engine::Window::clear(Color::Hexa_value color)
 {
     std::fill_n(m_frame_buffer, m_screen_resolution.x * m_screen_resolution.y, color);
 }
 
-void nd::engine::Window::draw(unsigned int x, unsigned int y, Pixel color)
+void nd::engine::Window::draw(unsigned int x, unsigned int y, Color::Hexa_value color)
 {
     m_frame_buffer[x + y * m_screen_resolution.x] = color;
 }
@@ -107,7 +109,7 @@ void nd::engine::Window::setResolution(const math::Vector2u &new_resolution)
     if (!m_texture)
         throw std::runtime_error(SDL_GetError());
 
-    m_frame_buffer = new Pixel[m_screen_resolution.x * m_screen_resolution.y];
+    m_frame_buffer = new Color::Hexa_value[m_screen_resolution.x * m_screen_resolution.y];
     if (!m_frame_buffer)
         throw std::bad_alloc();
 
@@ -122,10 +124,15 @@ void nd::engine::Window::onEvent(const SDL_Event &e)
 {
     if (e.type == SDL_KEYDOWN && e.window.windowID == getID()) {
 
-        if (e.key.keysym.scancode == SDL_SCANCODE_F2)
+        if (e.key.keysym.scancode == SDL_SCANCODE_F3)
             setResolution(getResolution() + math::Vector2u { 10, 10 });
-        else if (e.key.keysym.scancode == SDL_SCANCODE_F3)
+        else if (e.key.keysym.scancode == SDL_SCANCODE_F2)
             setResolution(getResolution() - math::Vector2u { 10, 10 });
+
+        if (e.key.keysym.scancode == SDL_SCANCODE_F4 && m_ray_tracing_depth >= 2ul)
+            m_ray_tracing_depth--;
+        else if (e.key.keysym.scancode == SDL_SCANCODE_F5)
+            m_ray_tracing_depth++;
 
     }
 }
